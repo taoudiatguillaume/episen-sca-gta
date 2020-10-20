@@ -8,11 +8,16 @@ import { Order } from './order';
 })
 export class OrderService {
 
-  private baseUrl = "http://localhost:8080/api/orders"
+  private baseUrl = "http://localhost:8080/api"
 
   constructor(private http : HttpClient) { }
 
   getOrders(): Observable<Order[]>{
     return this.http.get<Order[]>(`${this.baseUrl}`);
+  }
+
+  public add_order(order: Order): Observable<Order> {
+    const url = this.baseUrl + '/add/order';
+    return this.http.post<Order>(url, order);
   }
 }

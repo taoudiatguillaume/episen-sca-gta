@@ -1,4 +1,4 @@
-<div class ="container">
+<!--<div class ="container">
     <div class = "card">
         <h3 class= "text-center">Orders List</h3>
         <div class = "card-body">
@@ -15,5 +15,19 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>-->
+<div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <label>Order Name</label>
+      </div>
+      <div class="col-md-10">
+        <input type="text" class="form-control" [(ngModel)]="order.name" />
+      </div>
+    </div>
+    <br>
+    <div class="text-right">
+      <button class="btn btn-primary" (click)="add_order()">Add Order</button>
     </div>
 </div>

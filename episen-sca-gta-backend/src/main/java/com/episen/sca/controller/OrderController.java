@@ -27,8 +27,8 @@ public class OrderController {
 		return this.orderRepository.findAll();
 	}
 	
-	@PostMapping("/add/orders")
-	public Order createOrder(@RequestBody Order order){
+	@PostMapping("/add/order")
+	public Order add_order(@RequestBody Order order){
 		return orderRepository.save(order);
 	}
 }
