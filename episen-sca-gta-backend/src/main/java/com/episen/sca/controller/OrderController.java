@@ -3,8 +3,6 @@ package com.episen.sca.controller;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +31,28 @@ public class OrderController {
 	
 	@PostMapping("/add/order")
 	public Order add_order(@RequestBody Order order){
-		try(FileWriter f = new FileWriter("src/main/resources/orders.txt", true);
-				BufferedWriter b = new BufferedWriter(f);
-				PrintWriter p = new PrintWriter(b);){
-			p.println(order.getName());
-		}catch(IOException e) {e.printStackTrace();}
+//		try(FileWriter f = new FileWriter("orders.txt", true);
+//				BufferedWriter b = new BufferedWriter(f);
+//				PrintWriter p = new PrintWriter(b);){
+//			p.println(order.getName());
+//		}catch(IOException e) {e.printStackTrace();}
+		try {
+		      // Creates a FileWriter
+		      FileWriter file = new FileWriter("orders.txt");
+
+		      // Creates a BufferedWriter
+		      BufferedWriter output = new BufferedWriter(file);
+
+		      // Writes the string to the file
+		      output.write(order.getName());
+
+		      // Closes the writer
+		      output.close();
+		    }
+
+		    catch (Exception e) {
+		      e.getStackTrace();
+		    }
 		
 		return orderRepository.save(order);
 	}
