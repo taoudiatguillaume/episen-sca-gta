@@ -3,6 +3,7 @@ package com.episen.sca.controller;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,40 +21,48 @@ import com.episen.sca.repository.OrderRepository;
 @RestController
 @RequestMapping("api/")
 public class OrderController {
-	
+
 	@Autowired
 	private OrderRepository orderRepository;
-	
+	FileWriter file;
+	BufferedWriter output;
+
+	public OrderController() {
+		try {
+			file = new FileWriter("orders.txt");
+			output = new BufferedWriter(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+
 	@GetMapping("orders")
 	public List<Order> getOrders(){
 		return this.orderRepository.findAll();
 	}
-	
+
 	@PostMapping("/add/order")
 	public Order add_order(@RequestBody Order order){
-//		try(FileWriter f = new FileWriter("orders.txt", true);
-//				BufferedWriter b = new BufferedWriter(f);
-//				PrintWriter p = new PrintWriter(b);){
-//			p.println(order.getName());
-//		}catch(IOException e) {e.printStackTrace();}
-		try {
-		      // Creates a FileWriter
-		      FileWriter file = new FileWriter("orders.txt");
+		//		try(FileWriter f = new FileWriter("orders.txt", true);
+		//				BufferedWriter b = new BufferedWriter(f);
+		//				PrintWriter p = new PrintWriter(b);){
+		//			p.println(order.getName());
+		//		}catch(IOException e) {e.printStackTrace();}
 
-		      // Creates a BufferedWriter
-		      BufferedWriter output = new BufferedWriter(file);
-
-		      // Writes the string to the file
-		      output.write(order.getName());
-
-		      // Closes the writer
-		      output.close();
-		    }
-
-		    catch (Exception e) {
-		      e.getStackTrace();
-		    }
+		// Writes the string to the file
 		
+		try {
+			output.write(order.getName());
+			output.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 		return orderRepository.save(order);
 	}
 }

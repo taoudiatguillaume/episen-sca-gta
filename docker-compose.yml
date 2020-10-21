@@ -1,20 +1,19 @@
-version: '3.8'
+version: '3'
 services:
-  episen-sca-gta-back:
-    build: ./episen-sca-gta-backend
-    container_name: "backend-service"
-    ports:
-      - "8080:8080"
-    links:
-      - "episen-sca-gta-front"
-    volumes:
-      - backend:/var/orders/
-
-  episen-sca-gta-front:
-    build: ./episen-sca-gta-front
-    container_name: "frontend-service"
+  front:
+    image: jeee187/episen-sca-gta-front:0.1
+    container_name: "front-orders"
     ports:
       - "80:80"
-
+    links:
+      - "back:backend-server"
+  back:
+    image: jeee187/episen-sca-gta-back:0.1
+    container_name: "backend-server"
+    hostname: backend-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - orders-data:/etc
 volumes:
-  backend:
+  orders-data:
