@@ -1,3 +1,9 @@
+FROM node:alpine AS front-build
+WORKDIR /opt/app
+COPY . .
+RUN npm ci && npm run build
+
 FROM nginx:1.17.1-alpine
-COPY /dist/episen-sca-gta-front /usr/share/nginx/html
+LABEL maintainer="jeee187-GTA@EPISENSCA" build_date="2020-11-21"
+COPY --from=front-build /dist/episen-sca-gta-front /usr/share/nginx/html
 EXPOSE 80

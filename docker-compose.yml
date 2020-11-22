@@ -1,7 +1,7 @@
 version: '3'
 services:
   front:
-    image: jeee187/episen-sca-gta-front:0.1
+    image: jeee187/episen-sca-gta-front:0.2
     container_name: "front-orders"
     ports:
       - "80:80"
