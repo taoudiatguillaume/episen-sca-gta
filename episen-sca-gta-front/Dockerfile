@@ -7,4 +7,3 @@ FROM nginx:alpine
 LABEL maintainer="jeee187-GTA@EPISENSCA" build_date="2020-11-21"
 COPY --from=my-app-build opt/app/dist/Frontangular /usr/share/nginx/html
 EXPOSE 80
-
