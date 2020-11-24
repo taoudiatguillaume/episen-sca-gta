@@ -8,7 +8,7 @@ import { Order } from './order';
 })
 export class OrderService {
 
-  private baseUrl = "http://localhost:8080/api"
+  private baseUrl = "http://172.31.249.32:8080/api"
 
   constructor(private http : HttpClient) { }
 
