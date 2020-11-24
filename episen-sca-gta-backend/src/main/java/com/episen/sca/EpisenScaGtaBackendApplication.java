@@ -8,11 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class EpisenScaGtaBackendApplication{
 
-	private static Logger logger = Logger.getLogger(EpisenScaGtaBackendApplication.class);
 
 	public static void main(String[] args) {
 
 		SpringApplication.run(EpisenScaGtaBackendApplication.class, args);
-		logger.info(EpisenScaGtaBackendApplication.logger.getAllAppenders());
 	}
 }

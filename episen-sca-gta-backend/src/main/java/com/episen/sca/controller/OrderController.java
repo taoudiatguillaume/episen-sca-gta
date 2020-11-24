@@ -1,9 +1,7 @@
 package com.episen.sca.controller;
 
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +23,19 @@ public class OrderController {
 
 	@Autowired
 	private OrderRepository orderRepository;
-	FileWriter file;
-	BufferedWriter output;
+	//FileWriter file;
+	//BufferedWriter output;
 	private static Logger logger = Logger.getLogger(OrderController.class);
 
-	public OrderController() {
-		try {
-			file = new FileWriter("orders.txt");
-			output = new BufferedWriter(file);
-		} catch (IOException e) {
+	//public OrderController() {
+		//try {
+		//	file = new FileWriter("orders.txt");
+		//	output = new BufferedWriter(file);
+		//} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+		//	e.printStackTrace();
+		//}
+	//}
 
 
 
@@ -56,13 +54,14 @@ public class OrderController {
 
 		// Writes the string to the file
 		logger.info(order.getName());
-		try {
-			output.write(order.getName());
-			output.flush();
-		} catch (IOException e) {
+		//try {
+		//	output.write(order.getName());
+
+		//	output.flush();
+		//} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//	e.printStackTrace();
+		//}
 
 
 		return orderRepository.save(order);
