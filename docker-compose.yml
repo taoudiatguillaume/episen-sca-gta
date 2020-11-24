@@ -1,19 +1,46 @@
 version: '3'
 services:
   front:
-    image: jeee187/episen-sca-gta-front:0.2
+    image: jeee187/episen-sca-gta-front:1.0
     container_name: "front-orders"
     ports:
       - "80:80"
+    volumes :
+      front-data:/etc
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 300M
+        reservations:
+          cpus: "1"
+          memory: 200M
+      restart_policy:
+        condition: on-failure
     links:
       - "back:backend-server"
   back:
-    image: jeee187/episen-sca-gta-back:0.1
+    image: jeee187/episen-sca-gta-back:1.0
     container_name: "backend-server"
     hostname: backend-server
     ports:
       - "8080:8080"
     volumes:
-      - orders-data:/etc
+      - orders-data:/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 300M
+        reservations:
+          cpus: "1"
+          memory: 200M
+      restart_policy:
+        condition: on-failure
 volumes:
   orders-data:
+  front-data:
