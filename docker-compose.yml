@@ -6,7 +6,7 @@ services:
     ports:
       - "80:80"
     volumes :
-      front-data:/etc
+      - front-data:/etc
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
     deploy:
