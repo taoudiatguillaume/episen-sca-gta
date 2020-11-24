@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.apache.log4j.Logger;
 
 import com.episen.sca.model.Order;
 import com.episen.sca.repository.OrderRepository;
@@ -26,6 +27,7 @@ public class OrderController {
 	private OrderRepository orderRepository;
 	FileWriter file;
 	BufferedWriter output;
+	private static Logger logger = Logger.getLogger(OrderController.class);
 
 	public OrderController() {
 		try {
@@ -53,7 +55,7 @@ public class OrderController {
 		//		}catch(IOException e) {e.printStackTrace();}
 
 		// Writes the string to the file
-		
+		logger.info(order.getName());
 		try {
 			output.write(order.getName());
 			output.flush();
