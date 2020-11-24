@@ -8,7 +8,7 @@ services:
     volumes :
       - front-data:/etc
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: ["CMD", "curl", "-f", "http://172.31.249.32:80"]
     deploy:
       resources:
         limits:
@@ -30,7 +30,7 @@ services:
     volumes:
       - orders-data:/logs
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: ["CMD", "curl", "-f", "http://172.31.249.32:80"]
     deploy:
       resources:
         limits:
