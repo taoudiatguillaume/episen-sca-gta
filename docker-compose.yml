@@ -45,6 +45,6 @@ services:
           memory: 200M
       restart_policy:
         condition: on-failure
-volumes:
+  volumes:
   orders-data:
   front-data:
