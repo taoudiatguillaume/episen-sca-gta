@@ -1,7 +1,6 @@
 package com.episen.sca;
 
-import com.episen.sca.controller.OrderController;
-import org.apache.log4j.Logger;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EpisenScaGtaBackendApplication{
 
 
-	public static void main(String[] args) {
+	public static 	 void main(String[] args) {
 
 		SpringApplication.run(EpisenScaGtaBackendApplication.class, args);
 	}

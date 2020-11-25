@@ -1,46 +1,53 @@
 version: '3'
 services:
-  episen-sca-gta-back:
-    build: ./episen-sca-gta-backend
-    container_name: "backend"
-    ports:
-      - "8080:8080"
-    links:
-      - "episen-sca-gta-front"
-    deploy:
-      replicas: 2
-      resources:
-        limits:
-          cpus: '0.8'
-          memory: 384m
-        reservations:
-          cpus: '0.6'
-          memory: 256M
-      restart_policy:
-        condition: on-failure
-        max_attempts: 3
-
-    volumes:
-      - /srv/gta-backend/data:/home/executor/app/data
-      - /srv/gta-backend/log:/home/executor/app/log
-
-
-  episen-sca-gta-front:
-    build: ./episen-sca-gta-front
-    container_name: "frontend"
+  gta-front:
+    image: jeee187/episen-sca-gta-front:1.0
     ports:
       - "80:80"
+      - "81:81"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+    links:
+      - "back:backend-server"
     volumes:
-      - /srv/mem-nginx/log:/var/log/nginx
+      - frontlog:/etc
     deploy:
+      mode: replicated
       replicas: 2
       resources:
         limits:
-          cpus: '0.8'
-          memory: 384m
+          cpus: "1"
+          memory: 200M
         reservations:
-          cpus: '0.6'
-          memory: 256M
+          cpus: "0.5"
+          memory: 100M
       restart_policy:
         condition: on-failure
-        max_attempts: 3
+    links:
+      - "gta-back:backend-server"
+  gta-back:
+    image: jeee187/episen-sca-gta-back:1.0
+    hostname: backend-server
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+    volumes:
+      - orders-data:/etc
+    deploy:
+      mode: replicated
+      replicas: 2
+      resources:
+        limits:
+          cpus: "1"
+          memory: 300M
+        reservations:
+          cpus: "0.5"
+          memory: 200M
+      restart_policy:
+        condition: on-failure
+volumes:
+  orders-data:
+  frontlog:
+    
