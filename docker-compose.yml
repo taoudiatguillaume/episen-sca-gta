@@ -2,45 +2,45 @@ version: '3'
 services:
   gta-front:
     image: jeee187/episen-sca-gta-front:1.0
+    container_name: "front-orders"
     ports:
       - "80:80"
-      - "81:81"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      test: ["CMD", "curl", "-f", "http://front-orders:80"]
     links:
       - "back:backend-server"
     volumes:
       - frontlog:/etc
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       resources:
         limits:
-          cpus: "1"
-          memory: 200M
+          cpus: "0.6"
+          memory: 256M
         reservations:
-          cpus: "0.5"
-          memory: 100M
+          cpus: "0.6"
+          memory: 200M
       restart_policy:
         condition: on-failure
     links:
-      - "gta-back:backend-server"
+      - "gta-back"
+
   gta-back:
     image: jeee187/episen-sca-gta-back:1.0
-    hostname: backend-server
+    container_name: backend-server
     ports:
       - "8080:8080"
-      - "8081:8081"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      test: ["CMD", "curl", "-f", "http://backend-server:8080"]
     volumes:
       - orders-data:/etc
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
       resources:
         limits:
-          cpus: "1"
+          cpus: "0.6"
           memory: 300M
         reservations:
           cpus: "0.5"
