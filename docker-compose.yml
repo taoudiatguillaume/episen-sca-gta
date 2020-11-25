@@ -1,15 +1,22 @@
-version: "3"
+version: '3'
 services:
-  episen-sca-lbe-back:
-    image: jeee187/episen-sca-gta-back:1.0
-    ports:
-      - "8080"
-    volumes:
-      - ./log
-
-  episen-sca-lbe-front:
+  front:
     image: jeee187/episen-sca-gta-front:1.0
+    container_name: "front-orders"
     ports:
-      - "80"
+      - "80:80"
+    volumes :
+      - front-data:/etc
+    links:
+      - "back:backend-server"
+  back:
+    image: jeee187/episen-sca-gta-back:1.0
+    container_name: "backend-server"
+    hostname: backend-server
+    ports:
+      - "8080:8080"
     volumes:
-      - ./logfront
+      - orders-data:/logs
+volumes:
+  orders-data:
+  front-data:
