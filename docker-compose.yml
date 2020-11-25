@@ -1,46 +1,39 @@
-version: '3'
+version: "3"
 services:
-  front:
-    image: jeee187/episen-sca-gta-front:1.0
-    container_name: "front-orders"
-    ports:
-      - "80:80"
-    volumes :
-      - front-data:/etc
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://172.31.249.32:80"]
-    deploy:
-      resources:
-        limits:
-          cpus: "2"
-          memory: 300M
-        reservations:
-          cpus: "1"
-          memory: 200M
-      restart_policy:
-        condition: on-failure
-    links:
-      - "back:backend-server"
-  back:
+  episen-sca-lbe-back:
     image: jeee187/episen-sca-gta-back:1.0
-    container_name: "backend-server"
-    hostname: backend-server
     ports:
-      - "8080:8080"
+      - "8080"
     volumes:
-      - orders-data:/logs
+      - ./log
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://172.31.249.32:80"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
     deploy:
       resources:
         limits:
-          cpus: "2"
+          cpus: "1"
           memory: 300M
         reservations:
-          cpus: "1"
+          cpus: "0.5"
           memory: 200M
       restart_policy:
         condition: on-failure
-volumes:
-  orders-data:
-  front-data:
+
+  episen-sca-lbe-front:
+    image: jeee187/episen-sca-gta-front:1.0
+    ports:
+      - "80"
+    volumes:
+      - ./logfront
+    healthcheck:
+       test: ["CMD", "curl", "-f", "http://localhost:80"]
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 200M
+        reservations:
+          cpus: "0.5"
+          memory: 100M
+      restart_policy:
+        condition: on-failure
